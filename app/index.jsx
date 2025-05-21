@@ -15,7 +15,9 @@ const Home = () => {
         <View>
           <TouchableOpacity style={styles.button}>
             <Link href="/products">Products</Link>
-            <Link href="/new-product">ADD PRODUCT</Link>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+            <Link href="/add-product">ADD PRODUCT</Link>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
             <Text>Tretmants</Text>

@@ -10,13 +10,12 @@ import {
 } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
 import { Picker } from "@react-native-picker/picker";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter  } from "expo-router"; 
 
 
 const ProductForm = () => {
   const db = useSQLiteContext();
-  const navigation = useNavigation();
-
+  const router = useRouter();
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -97,15 +96,12 @@ const ProductForm = () => {
             [
                 {
                 text: "Back",
-                style: "cancel",
-                onPress: () => {
-                    navigation.goBack();
-                },
+                style: "cancel", 
                 },
                 {
-                text: "Go TO List",
+                text: "Go To List",
                 onPress: () => {
-                    navigation.navigate("ProductList");
+                    router.push("/products");
                 },
                 },
             ]

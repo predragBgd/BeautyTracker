@@ -12,13 +12,15 @@ import {
 import { useSQLiteContext } from "expo-sqlite";
 import { Picker } from "@react-native-picker/picker";
 
-// Potrebno je proslediti ID proizvoda koji se menja
 const EditProductForm = ({ productId, onSaved }) => {
   const db = useSQLiteContext();
 
   const [loading, setLoading] = useState(true);
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [stars, setStars] = useState(0);
+  const [customBrand, setCustomBrand] = useState("");
+  const [customCategory, setCustomCategory] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -32,10 +34,6 @@ const EditProductForm = ({ productId, onSaved }) => {
     rate: "",
     date: new Date().toISOString(),
   });
-
-  const [customBrand, setCustomBrand] = useState("");
-  const [customCategory, setCustomCategory] = useState("");
-  const [stars, setStars] = useState(0);
 
   useEffect(() => {
     const loadData = async () => {
@@ -108,7 +106,7 @@ const EditProductForm = ({ productId, onSaved }) => {
       );
 
       Alert.alert("Success", "Product updated successfully!");
-      onSaved?.(); // opcionalni callback
+      onSaved?.();
     } catch (error) {
       console.error("Update error:", error);
       Alert.alert("Error", error.message || "Failed to update product.");
@@ -125,10 +123,10 @@ const EditProductForm = ({ productId, onSaved }) => {
 
   return (
     <View style={styles.container}>
-    <EditProductForm productId={42} onSaved={() => navigation.goBack()} />
+      <Text style={styles.title}>Edit Product {form.name}</Text>
       <TextInput
         style={styles.input}
-        placeholder="Name"
+        placeholder="Product Name"
         value={form.name}
         onChangeText={(text) => setForm({ ...form, name: text })}
       />
@@ -137,6 +135,7 @@ const EditProductForm = ({ productId, onSaved }) => {
         placeholder="Price"
         value={form.price}
         onChangeText={(text) => setForm({ ...form, price: text })}
+        keyboardType="numeric"
       />
 
       <Text style={styles.label}>Brand</Text>
@@ -195,6 +194,13 @@ const EditProductForm = ({ productId, onSaved }) => {
         value={form.image}
         onChangeText={(text) => setForm({ ...form, image: text })}
       />
+      <TextInput
+        style={styles.input}
+        placeholder="Quantity"
+        value={form.quantity}
+        onChangeText={(text) => setForm({ ...form, quantity: text })}
+        keyboardType="numeric"
+      />
 
       <Text style={styles.label}>Rate</Text>
       <View style={{ flexDirection: "row", marginBottom: 10 }}>
@@ -238,5 +244,6 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: "bold",
     marginBottom: 5,
+    marginTop: 10,
   },
 });
